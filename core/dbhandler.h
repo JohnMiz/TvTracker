@@ -5,6 +5,8 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <iostream>
+#include <list>
+#include "tvshow.h"
 
 class DbHandler
 {
@@ -12,11 +14,14 @@ public:
     DbHandler();
     ~DbHandler();
 
-    bool addTvShow(std::string& name);
+    bool addTvShow(std::string& name, std::string &image);
+    std::list<tvshow> getAllTvShows();
+
+    void deleteTvShow(tvshow &ts);
 
 private:
    QSqlDatabase db;
-   QSqlQuery query;
+
 };
 
 #endif // DBHANDLER_H
