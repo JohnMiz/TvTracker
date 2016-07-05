@@ -13,6 +13,7 @@
 #include <QWidgetList>
 #include "sourcegrabber.h"
 #include <regex>
+#include <vector>
 
 namespace Ui {
 class MainWindow;
@@ -26,12 +27,15 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+
 private slots:
     void on_pushButton_clicked();
 
     void on_listWidget_itemClicked(QListWidgetItem *item);
 
 private:
+     std::vector<TvSeries> searchResults(std::string& code);
+
     Ui::MainWindow *ui;
     DbHandler* dbHandler;
     std::list<tvshow> listOfTvShows;
