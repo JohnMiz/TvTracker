@@ -11,6 +11,8 @@
 #include <QListWidget>
 #include "tvshow.h"
 #include <QWidgetList>
+#include "sourcegrabber.h"
+#include <regex>
 
 namespace Ui {
 class MainWindow;

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -16,13 +16,14 @@ SOURCES += main.cpp\
         core/mainwindow.cpp \
         core/dbhandler.cpp \
     core/tvshow.cpp \
-    core/customitemlist.cpp
+    core/customitemlist.cpp \
+    core/sourcegrabber.cpp
 
 HEADERS  += core/mainwindow.h \
             core/dbhandler.h \
     core/tvshow.h \
-    customitemlist.h \
-    core/customitemlist.h
+    core/customitemlist.h \
+    core/sourcegrabber.h
 
 FORMS    += core/mainwindow.ui
 
