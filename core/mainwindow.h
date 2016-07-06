@@ -11,9 +11,7 @@
 #include <QListWidget>
 #include "tvshow.h"
 #include <QWidgetList>
-#include "sourcegrabber.h"
-#include <regex>
-#include <vector>
+#include "tvtrackermanager.h"
 
 namespace Ui {
 class MainWindow;
@@ -34,11 +32,10 @@ private slots:
     void on_listWidget_itemClicked(QListWidgetItem *item);
 
 private:
-     std::vector<TvSeries> searchResults(std::string& code);
-
     Ui::MainWindow *ui;
     DbHandler* dbHandler;
     std::list<tvshow> listOfTvShows;
+    TvTrackerManager manager;
 };
 
 #endif // MAINWINDOW_H
