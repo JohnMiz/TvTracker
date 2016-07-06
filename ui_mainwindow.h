@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.6.0
+** Created by: Qt User Interface Compiler version 5.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -32,8 +32,9 @@ public:
     QPushButton *pushButton;
     QListWidget *listWidget;
     QGroupBox *groupBox;
-    QPushButton *pushButton_2;
-    QLineEdit *lineEdit;
+    QPushButton *searchButton;
+    QLineEdit *queryLine;
+    QListWidget *searchResultsList;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -49,13 +50,13 @@ public:
         itemsGroup->setGeometry(QRect(10, 10, 451, 401));
         itemName = new QLineEdit(itemsGroup);
         itemName->setObjectName(QStringLiteral("itemName"));
-        itemName->setGeometry(QRect(10, 30, 351, 20));
+        itemName->setGeometry(QRect(10, 20, 351, 20));
         pushButton = new QPushButton(itemsGroup);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(365, 30, 75, 23));
+        pushButton->setGeometry(QRect(365, 20, 75, 23));
         listWidget = new QListWidget(itemsGroup);
         listWidget->setObjectName(QStringLiteral("listWidget"));
-        listWidget->setGeometry(QRect(10, 60, 431, 331));
+        listWidget->setGeometry(QRect(10, 50, 431, 341));
         QFont font;
         font.setPointSize(10);
         listWidget->setFont(font);
@@ -67,13 +68,16 @@ public:
         listWidget->setSelectionRectVisible(true);
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(470, 20, 391, 391));
-        pushButton_2 = new QPushButton(groupBox);
-        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setGeometry(QRect(300, 20, 75, 23));
-        lineEdit = new QLineEdit(groupBox);
-        lineEdit->setObjectName(QStringLiteral("lineEdit"));
-        lineEdit->setGeometry(QRect(20, 20, 271, 20));
+        groupBox->setGeometry(QRect(470, 10, 391, 401));
+        searchButton = new QPushButton(groupBox);
+        searchButton->setObjectName(QStringLiteral("searchButton"));
+        searchButton->setGeometry(QRect(300, 20, 75, 23));
+        queryLine = new QLineEdit(groupBox);
+        queryLine->setObjectName(QStringLiteral("queryLine"));
+        queryLine->setGeometry(QRect(20, 20, 271, 20));
+        searchResultsList = new QListWidget(groupBox);
+        searchResultsList->setObjectName(QStringLiteral("searchResultsList"));
+        searchResultsList->setGeometry(QRect(20, 50, 351, 341));
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
@@ -87,7 +91,7 @@ public:
         itemsGroup->setTitle(QApplication::translate("MainWindow", "Items list", 0));
         pushButton->setText(QApplication::translate("MainWindow", "Add item", 0));
         groupBox->setTitle(QApplication::translate("MainWindow", "Search", 0));
-        pushButton_2->setText(QApplication::translate("MainWindow", "Search", 0));
+        searchButton->setText(QApplication::translate("MainWindow", "Search", 0));
     } // retranslateUi
 
 };

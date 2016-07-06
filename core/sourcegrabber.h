@@ -12,9 +12,10 @@
 #include <fstream>
 
 struct TvSeries {
-    std::string title;
-    std::string link;
+    int id;
+    std::string name;
     std::string image;
+    std::string link;
 };
 
 class SourceGrabber {

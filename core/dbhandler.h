@@ -6,7 +6,7 @@
 #include <QDebug>
 #include <iostream>
 #include <list>
-#include "tvshow.h"
+#include "sourcegrabber.h"
 
 class DbHandler
 {
@@ -14,10 +14,10 @@ public:
     DbHandler();
     ~DbHandler();
 
-    bool addTvShow(std::string& name, std::string &image);
-    std::list<tvshow> getAllTvShows();
+    bool addTvShow(std::string& name, std::string &image,std::string& link);
+    std::list<TvSeries> getAllTvShows();
 
-    void deleteTvShow(tvshow &ts);
+    void deleteTvShow(int &id, std::string name);
 
 private:
    QSqlDatabase db;

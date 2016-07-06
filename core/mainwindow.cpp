@@ -10,13 +10,11 @@ MainWindow::MainWindow(QWidget *parent) :
     listOfTvShows = dbHandler->getAllTvShows();
 
 
-     for(tvshow ts : listOfTvShows)
-       {
-           QListWidgetItem* item = new QListWidgetItem(QIcon(QString::fromStdString(ts.getImage())),QString::fromStdString(std::to_string(ts.getId())) + " "+ QString::fromStdString(ts.getName()));
-           ui->listWidget->addItem(item);
-       }
-
-     manager.searchSeries("Silicon Valley");
+     for(TvSeries ts : listOfTvShows)
+     {
+        QListWidgetItem* item = new QListWidgetItem(QIcon(QString::fromStdString(ts.image)),QString::fromStdString(std::to_string(ts.id)) + " " + QString::fromStdString(ts.name));
+        ui->listWidget->addItem(item);
+     }
 }
 
 MainWindow::~MainWindow()
@@ -40,27 +38,30 @@ void MainWindow::on_pushButton_clicked()
                 break;
             }
         }
+
         if(!exist)
         {
-            std::string imagePath = ":/tvshows/silicon_valley.jpg";
-            if(dbHandler->addTvShow(ui->itemName->text().toStdString(),imagePath))
+            std::string imagePath = ":/tvshows/girls.jpg";
+
+            if(dbHandler->addTvShow(ui->itemName->text().toStdString(),imagePath,std::string("link")))
                 qDebug() << "added new tv show!";
 
-            if(listOfTvShows.size()==0)
+            TvSeries end;
+
+            int new_id=1;
+
+            if(listOfTvShows.size()>0)
             {
-                QListWidgetItem *item = new QListWidgetItem(QIcon(QString::fromStdString(imagePath)),QString::fromStdString(std::to_string(1))+" "+ui->itemName->text());
-                ui->listWidget->addItem(item);
-
-                listOfTvShows.push_back(tvshow(1,ui->itemName->text().toStdString(),imagePath));
-
+               end = listOfTvShows.back();
+               new_id = end.id+1;
             }
-            else{
-            tvshow end = listOfTvShows.back();
-            QListWidgetItem *item = new QListWidgetItem(QIcon(QString::fromStdString(imagePath)),QString::fromStdString(std::to_string(end.getId()+1))+" "+ui->itemName->text());
+
+            QListWidgetItem *item = new QListWidgetItem(QIcon(QString::fromStdString(imagePath)),QString::fromStdString(std::to_string(new_id)) + " " + ui->itemName->text());
             ui->listWidget->addItem(item);
 
-            listOfTvShows.push_back(tvshow(end.getId()+1,ui->itemName->text().toStdString(),imagePath));
-            }
+            listOfTvShows.push_back(TvSeries{new_id,ui->itemName->text().toStdString(),imagePath});
+
+
             ui->itemName->setText((""));
         }
 
@@ -70,18 +71,38 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
 {
-    ui->listWidget->removeItemWidget(item);
     std::string itemStr = item->text().toStdString();
-    dbHandler->deleteTvShow(tvshow(std::stoi(itemStr.substr(0,itemStr.find(" "))),itemStr.substr(itemStr.find(" ")+1)));
-    std::list<tvshow>::iterator end = listOfTvShows.end();
-    for(std::list<tvshow>::iterator it = listOfTvShows.begin();
-        it!=end;
-        )
+
+    int id = std::stoi(itemStr.substr(0,itemStr.find(" ")));
+    std::string name = itemStr.substr(itemStr.find(" ")+1);
+
+    //remove item from db
+    dbHandler->deleteTvShow(id,name);
+
+    //remove item from list of TvSeries
+
+    std::list<TvSeries>::iterator end = listOfTvShows.end();
+    for(std::list<TvSeries>::iterator it = listOfTvShows.begin();it!=end;)
     {
-        if(it->getId() == std::stoi(itemStr.substr(0,itemStr.find(" "))) && it->getName() ==itemStr.substr(itemStr.find(" ")+1) )
+        if(it->id == id && it->name == name)
             it = listOfTvShows.erase(it);
         else ++it;
     }
 
+    //remove item from list widget
+    ui->listWidget->removeItemWidget(item);
+}
 
+
+void MainWindow::on_searchButton_clicked()
+{
+    if(ui->queryLine->text() != "")
+    {
+        ui->searchResultsList->clear();
+        std::vector<TvSeries> list = manager.searchSeries(ui->queryLine->text().toStdString());
+        for(TvSeries ts : list)
+        {
+            ui->searchResultsList->addItem(new QListWidgetItem(QString::fromStdString(ts.name)));
+        }
+    }
 }

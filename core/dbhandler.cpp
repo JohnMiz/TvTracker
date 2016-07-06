@@ -10,7 +10,7 @@ DbHandler::DbHandler()
      }
      else{
          QSqlQuery query;
-         if(query.exec("CREATE TABLE IF NOT EXISTS tvshow(id INTEGER PRIMARY KEY, name text, image text);"))
+         if(query.exec("CREATE TABLE IF NOT EXISTS tvshow(id INTEGER PRIMARY KEY, name text, image text,link text);"))
          {
              qDebug() << "tvshow table is opened!";
          }
@@ -21,13 +21,14 @@ DbHandler::~DbHandler()
 {
 }
 
-bool DbHandler::addTvShow(std::string& name, std::string& image)
+bool DbHandler::addTvShow(std::string& name, std::string& image, std::string &link)
 {
     bool success=false;
     QSqlQuery query;
-    query.prepare("INSERT INTO tvshow(name, image) VALUES (:name,:image)");
+    query.prepare("INSERT INTO tvshow(name, image, link) VALUES (:name,:image,:link)");
     query.bindValue(":name",QString::fromStdString(name));
-     query.bindValue(":image",QString::fromStdString(image));
+    query.bindValue(":image",QString::fromStdString(image));
+    query.bindValue(":link",QString::fromStdString(link));
     if(query.exec())
     {
         success = true;
@@ -41,32 +42,34 @@ bool DbHandler::addTvShow(std::string& name, std::string& image)
 }
 
 
- std::list<tvshow> DbHandler::getAllTvShows()
+ std::list<TvSeries> DbHandler::getAllTvShows()
  {
-    std::list<tvshow> list;
+    std::list<TvSeries> list;
     QSqlQuery query("SELECT * FROM tvshow");
     int idId = query.record().indexOf("id");
     int idName = query.record().indexOf("name");
     int idImage = query.record().indexOf("image");
+    int idLink = query.record().indexOf("link");
 
     while (query.next())
     {
         int id = query.value(idId).toInt();
        QString name = query.value(idName).toString();
        QString image = query.value(idImage).toString();
-       list.push_back(tvshow(id,name.toStdString(),image.toStdString()));
+       QString link = query.value(idLink).toString();
+       list.push_back(TvSeries{id,name.toStdString(),image.toStdString(),link.toStdString()});
     }
 
     return list;
  }
 
- void DbHandler::deleteTvShow(tvshow& ts)
+ void DbHandler::deleteTvShow(int& id, std::string name)
  {
      bool success;
      QSqlQuery query;
      query.prepare("DELETE FROM tvshow WHERE id = (:id) AND name = (:name)");
-     query.bindValue(":id",ts.getId());
-     query.bindValue(":name", QString::fromStdString(ts.getName()));
+     query.bindValue(":id",id);
+     query.bindValue(":name", QString::fromStdString(name));
      success = query.exec();
 
      if(!success)

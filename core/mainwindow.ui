@@ -42,7 +42,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>30</y>
+       <y>20</y>
        <width>351</width>
        <height>20</height>
       </rect>
@@ -52,7 +52,7 @@
      <property name="geometry">
       <rect>
        <x>365</x>
-       <y>30</y>
+       <y>20</y>
        <width>75</width>
        <height>23</height>
       </rect>
@@ -65,9 +65,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>60</y>
+       <y>50</y>
        <width>431</width>
-       <height>331</height>
+       <height>341</height>
       </rect>
      </property>
      <property name="font">
@@ -102,15 +102,15 @@
     <property name="geometry">
      <rect>
       <x>470</x>
-      <y>20</y>
+      <y>10</y>
       <width>391</width>
-      <height>391</height>
+      <height>401</height>
      </rect>
     </property>
     <property name="title">
      <string>Search</string>
     </property>
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="searchButton">
      <property name="geometry">
       <rect>
        <x>300</x>
@@ -123,13 +123,23 @@
       <string>Search</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="QLineEdit" name="queryLine">
      <property name="geometry">
       <rect>
        <x>20</x>
        <y>20</y>
        <width>271</width>
        <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="searchResultsList">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>50</y>
+       <width>351</width>
+       <height>341</height>
       </rect>
      </property>
     </widget>
