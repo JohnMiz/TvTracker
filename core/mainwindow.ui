@@ -6,39 +6,145 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>605</width>
-    <height>395</height>
+    <width>892</width>
+    <height>626</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>892</width>
+    <height>626</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>892</width>
+    <height>626</height>
+   </size>
+  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Tv Tracker V1.0</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QGroupBox" name="itemsGroup">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>140</y>
-      <width>191</width>
-      <height>111</height>
+      <x>10</x>
+      <y>10</y>
+      <width>451</width>
+      <height>401</height>
      </rect>
     </property>
-    <property name="text">
-     <string>PushButton</string>
+    <property name="title">
+     <string>Items list</string>
     </property>
+    <widget class="QLineEdit" name="itemName">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>351</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>365</x>
+       <y>20</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Add item</string>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="listWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>431</width>
+       <height>341</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>44</height>
+      </size>
+     </property>
+     <property name="flow">
+      <enum>QListView::TopToBottom</enum>
+     </property>
+     <property name="isWrapping" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="resizeMode">
+      <enum>QListView::Fixed</enum>
+     </property>
+     <property name="viewMode">
+      <enum>QListView::ListMode</enum>
+     </property>
+     <property name="selectionRectVisible">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>10</y>
+      <width>391</width>
+      <height>401</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Search</string>
+    </property>
+    <widget class="QPushButton" name="searchButton">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>20</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Search</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="queryLine">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>271</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="searchResultsList">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>50</y>
+       <width>351</width>
+       <height>341</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
   </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>605</width>
-     <height>21</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

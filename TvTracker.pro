@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,8 +13,18 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        core/mainwindow.cpp
+        core/mainwindow.cpp \
+        core/dbhandler.cpp \
+    core/sourcegrabber.cpp \
+    core/tvtrackermanager.cpp
 
-HEADERS  += core/mainwindow.h
+HEADERS  += core/mainwindow.h \
+            core/dbhandler.h \
+    core/sourcegrabber.h \
+    core/tvtrackermanager.h
 
 FORMS    += core/mainwindow.ui
+
+RESOURCES += \
+    images.qrc
+
