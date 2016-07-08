@@ -6,7 +6,7 @@
 #include <QDebug>
 #include <iostream>
 #include <list>
-#include "sourcegrabber.h"
+#include "http/sourcegrabber.h"
 
 class DbHandler
 {

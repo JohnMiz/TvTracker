@@ -1,8 +1,8 @@
 <RCC>
-    <qresource prefix="/tvshows">
-        <file>silicon_valley.jpg</file>
-        <file>girls.jpg</file>
-        <file>got.jpg</file>
-        <file>twd.jpg</file>
+    <qresource prefix="/">
+        <file>images/girls.jpg</file>
+        <file>images/got.jpg</file>
+        <file>images/silicon_valley.jpg</file>
+        <file>images/twd.jpg</file>
     </qresource>
 </RCC>

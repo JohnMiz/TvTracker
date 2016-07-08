@@ -14,16 +14,16 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         core/mainwindow.cpp \
-        core/dbhandler.cpp \
-    core/sourcegrabber.cpp \
-    core/tvtrackermanager.cpp \
-    core/filedownloader.cpp
+        core/tvtrackermanager.cpp \
+        db/dbhandler.cpp \
+        http/sourcegrabber.cpp \
+        http/filedownloader.cpp
 
 HEADERS  += core/mainwindow.h \
-            core/dbhandler.h \
-    core/sourcegrabber.h \
-    core/tvtrackermanager.h \
-    core/filedownloader.h
+            db/dbhandler.h \
+            core/tvtrackermanager.h \
+            http/sourcegrabber.h \
+            http/filedownloader.h
 
 FORMS    += core/mainwindow.ui
 

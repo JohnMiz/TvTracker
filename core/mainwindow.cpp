@@ -44,7 +44,7 @@ void MainWindow::on_pushButton_clicked()
         // add TvSeries
         if(!exist)
         {
-            std::string imagePath = ":/tvshows/got.jpg";
+            std::string imagePath = ":/images/got.jpg";
 
             //add TvSeries to Db
 
@@ -110,36 +110,12 @@ void MainWindow::on_searchButton_clicked()
         std::vector<TvSeries> list = manager.searchSeries(ui->queryLine->text().toStdString());
         for(TvSeries ts : list)
         {
-            ui->searchResultsList->addItem(new QListWidgetItem(QIcon(":/tvshows/twd.jpg"),QString::fromStdString(ts.name)));
+            ui->searchResultsList->addItem(new QListWidgetItem(QIcon(":/images/twd.jpg"),QString::fromStdString(ts.name)));
         }
     }
 }
 
 void MainWindow::on_searchResultsList_itemDoubleClicked(QListWidgetItem *item)
 {
-    std::string imagePath = ":/tvshows/got.jpg";
 
-    //add TvSeries to Db
-
-    if(dbHandler->addTvShow(item->text().toStdString(),imagePath,std::string("link")))
-        qDebug() << "added new tv show!";
-
-
-    TvSeries end;
-
-    int new_id=1;
-
-    if(listOfTvShows.size()>0)
-    {
-       end = listOfTvShows.back();
-       new_id = end.id+1;
-    }
-
-    //add TvSeris to list widget
-    QListWidgetItem *item = new QListWidgetItem(QIcon(QString::fromStdString(imagePath)),QString::fromStdString(std::to_string(new_id)) + " " + ui->itemName->text());
-    ui->listWidget->addItem(item);
-
-    // add TvSeries to list of tv series
-
-    listOfTvShows.push_back(TvSeries{new_id,ui->itemName->text().toStdString(),imagePath});
 }

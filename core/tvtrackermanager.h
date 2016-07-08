@@ -7,7 +7,7 @@
 
 #include <QMessageBox>
 
-#include "sourcegrabber.h"
+#include "http/sourcegrabber.h"
 
 // TEMP
 #include <QDebug>
@@ -16,8 +16,6 @@ class TvTrackerManager
 {
 public:
     TvTrackerManager();
-
-public:
     std::vector<TvSeries> searchSeries(const std::string& title);
 
 private:

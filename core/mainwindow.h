@@ -13,9 +13,9 @@
 #include <vector>
 #include <chrono>
 
-#include "dbhandler.h"
+#include "db/dbhandler.h"
 #include "tvtrackermanager.h"
-#include "filedownloader.h"
+#include "http/filedownloader.h"
 
 namespace Ui {
 class MainWindow;
