@@ -15,6 +15,7 @@
 
 #include "dbhandler.h"
 #include "tvtrackermanager.h"
+#include "filedownloader.h"
 
 namespace Ui {
 class MainWindow;
@@ -32,6 +33,8 @@ private slots:
     void on_pushButton_clicked();
     void on_listWidget_itemClicked(QListWidgetItem *item);
     void on_searchButton_clicked();
+
+    void on_searchResultsList_itemDoubleClicked(QListWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;

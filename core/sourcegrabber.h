@@ -27,6 +27,7 @@ public:
      std::string grabSearchIMDB(const std::string& title);
      std::string grabURL(const std::string& url);
 
+     std::string getSourceCode(const std::string &url);
 private:
      std::string _title;
 };

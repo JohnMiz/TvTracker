@@ -13,7 +13,7 @@ class FileDownloader : public QObject
  public:
   explicit FileDownloader(QUrl imageUrl, QObject *parent = 0);
   virtual ~FileDownloader();
-  std::string downloadedData() const;
+  QByteArray downloadedData() const;
 
  signals:
   void downloaded();

@@ -142,6 +142,17 @@
        <height>341</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>44</height>
+      </size>
+     </property>
     </widget>
    </widget>
   </widget>

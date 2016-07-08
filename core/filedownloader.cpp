@@ -1,27 +1,26 @@
 #include "filedownloader.h"
 
-FileDownloader::FileDownloader(QUrl imageUrl, QObject *parent) : QObject(parent)
+FileDownloader::FileDownloader(QUrl imageUrl, QObject *parent) :
+ QObject(parent)
 {
-     connect(&m_WebCtrl, SIGNAL (finished(QNetworkReply*)),this, SLOT (fileDownloaded(QNetworkReply*)));
+ connect(
+  &m_WebCtrl, SIGNAL (finished(QNetworkReply*)),
+  this, SLOT (fileDownloaded(QNetworkReply*))
+  );
 
-     QNetworkRequest request(imageUrl);
-     m_WebCtrl.get(request);
+ QNetworkRequest request(imageUrl);
+ m_WebCtrl.get(request);
 }
 
-FileDownloader::~FileDownloader()
-{
+FileDownloader::~FileDownloader() { }
 
+void FileDownloader::fileDownloaded(QNetworkReply* pReply) {
+ m_DownloadedData = pReply->readAll();
+ //emit a signal
+ pReply->deleteLater();
+ //emit downloaded();
 }
 
-void FileDownloader::fileDownloaded(QNetworkReply* pReply)
-{
-     m_DownloadedData = pReply->readAll();
-     //emit a signal
-     pReply->deleteLater();
-     //emit downloaded();
-}
-
-std::string FileDownloader::downloadedData() const
-{
-    return m_DownloadedData.toStdString();
+QByteArray FileDownloader::downloadedData() const {
+ return m_DownloadedData;
 }

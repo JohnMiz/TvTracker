@@ -78,6 +78,8 @@ public:
         searchResultsList = new QListWidget(groupBox);
         searchResultsList->setObjectName(QStringLiteral("searchResultsList"));
         searchResultsList->setGeometry(QRect(20, 50, 351, 341));
+        searchResultsList->setFont(font);
+        searchResultsList->setIconSize(QSize(32, 44));
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);

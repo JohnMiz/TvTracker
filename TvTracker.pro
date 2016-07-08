@@ -16,12 +16,14 @@ SOURCES += main.cpp\
         core/mainwindow.cpp \
         core/dbhandler.cpp \
     core/sourcegrabber.cpp \
-    core/tvtrackermanager.cpp
+    core/tvtrackermanager.cpp \
+    core/filedownloader.cpp
 
 HEADERS  += core/mainwindow.h \
             core/dbhandler.h \
     core/sourcegrabber.h \
-    core/tvtrackermanager.h
+    core/tvtrackermanager.h \
+    core/filedownloader.h
 
 FORMS    += core/mainwindow.ui
 

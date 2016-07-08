@@ -4,6 +4,9 @@
 #include <string>
 #include <vector>
 #include <regex>
+
+#include <QMessageBox>
+
 #include "sourcegrabber.h"
 
 // TEMP
