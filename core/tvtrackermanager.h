@@ -4,7 +4,10 @@
 #include <string>
 #include <vector>
 #include <regex>
-#include "sourcegrabber.h"
+
+#include <QMessageBox>
+
+#include "http/sourcegrabber.h"
 
 // TEMP
 #include <QDebug>
@@ -13,8 +16,6 @@ class TvTrackerManager
 {
 public:
     TvTrackerManager();
-
-public:
     std::vector<TvSeries> searchSeries(const std::string& title);
 
 private:

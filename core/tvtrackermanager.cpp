@@ -27,7 +27,7 @@ std::vector<TvSeries> TvTrackerManager::searchResults(const std::string &code){
          std::sregex_iterator nextLink{ searchResult.begin(), searchResult.end(), linkQuery };
          std::sregex_iterator endLink;
 
-         while (nextImage != endImage && nextLink!=endLink && tvList.size() < 10)
+         while (nextImage != endImage && nextLink!=endLink && tvList.size() < 20)
          {
               match = *nextImage;
               match2 = *nextLink;
@@ -50,6 +50,7 @@ std::vector<TvSeries> TvTrackerManager::searchResults(const std::string &code){
     }
     else
     {
+         QMessageBox::warning(0,"Message","Did not find anything!");
          qDebug() << "Didnt find anything\n";
     }
 

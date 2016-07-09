@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/girls.jpg</file>
+        <file>images/got.jpg</file>
+        <file>images/silicon_valley.jpg</file>
+        <file>images/twd.jpg</file>
+        <file>images/Black_Remove.png</file>
+    </qresource>
+</RCC>

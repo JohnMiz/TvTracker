@@ -28,8 +28,6 @@ class Ui_MainWindow
 public:
     QWidget *centralWidget;
     QGroupBox *itemsGroup;
-    QLineEdit *itemName;
-    QPushButton *pushButton;
     QListWidget *listWidget;
     QGroupBox *groupBox;
     QPushButton *searchButton;
@@ -48,15 +46,9 @@ public:
         itemsGroup = new QGroupBox(centralWidget);
         itemsGroup->setObjectName(QStringLiteral("itemsGroup"));
         itemsGroup->setGeometry(QRect(10, 10, 451, 401));
-        itemName = new QLineEdit(itemsGroup);
-        itemName->setObjectName(QStringLiteral("itemName"));
-        itemName->setGeometry(QRect(10, 20, 351, 20));
-        pushButton = new QPushButton(itemsGroup);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(365, 20, 75, 23));
         listWidget = new QListWidget(itemsGroup);
         listWidget->setObjectName(QStringLiteral("listWidget"));
-        listWidget->setGeometry(QRect(10, 50, 431, 341));
+        listWidget->setGeometry(QRect(10, 20, 431, 371));
         QFont font;
         font.setPointSize(10);
         listWidget->setFont(font);
@@ -78,6 +70,8 @@ public:
         searchResultsList = new QListWidget(groupBox);
         searchResultsList->setObjectName(QStringLiteral("searchResultsList"));
         searchResultsList->setGeometry(QRect(20, 50, 351, 341));
+        searchResultsList->setFont(font);
+        searchResultsList->setIconSize(QSize(32, 44));
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
@@ -89,7 +83,6 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Tv Tracker V1.0", 0));
         itemsGroup->setTitle(QApplication::translate("MainWindow", "Items list", 0));
-        pushButton->setText(QApplication::translate("MainWindow", "Add item", 0));
         groupBox->setTitle(QApplication::translate("MainWindow", "Search", 0));
         searchButton->setText(QApplication::translate("MainWindow", "Search", 0));
     } // retranslateUi

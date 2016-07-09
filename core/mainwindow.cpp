@@ -12,8 +12,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
      for(TvSeries ts : listOfTvShows)
      {
-        QListWidgetItem* item = new QListWidgetItem(QIcon(QString::fromStdString(ts.image)),QString::fromStdString(std::to_string(ts.id)) + " " + QString::fromStdString(ts.name));
+        QListWidgetItem* item = new QListWidgetItem();
         ui->listWidget->addItem(item);
+        auto wid = new CustomListItem(this,ts,1);
+        item->setSizeHint(QSize(wid->width(),44));
+        ui->listWidget->setItemWidget(item,wid);
      }
 }
 
@@ -22,75 +25,28 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_pushButton_clicked()
-{
-    bool exist = false;
-    if(ui->itemName->text() != "")
-    {
-        for(int i = 0; i < ui->listWidget->count(); ++i)
-        {
-            QListWidgetItem* item = ui->listWidget->item(i);
-            if(item->text() == ui->itemName->text())
-            {
-                QMessageBox::warning(this,"Error","Item is already exist!");
-                ui->itemName->setText((""));
-                exist=true;
-                break;
-            }
-        }
-
-        if(!exist)
-        {
-            std::string imagePath = ":/tvshows/girls.jpg";
-
-            if(dbHandler->addTvShow(ui->itemName->text().toStdString(),imagePath,std::string("link")))
-                qDebug() << "added new tv show!";
-
-            TvSeries end;
-
-            int new_id=1;
-
-            if(listOfTvShows.size()>0)
-            {
-               end = listOfTvShows.back();
-               new_id = end.id+1;
-            }
-
-            QListWidgetItem *item = new QListWidgetItem(QIcon(QString::fromStdString(imagePath)),QString::fromStdString(std::to_string(new_id)) + " " + ui->itemName->text());
-            ui->listWidget->addItem(item);
-
-            listOfTvShows.push_back(TvSeries{new_id,ui->itemName->text().toStdString(),imagePath});
-
-
-            ui->itemName->setText((""));
-        }
-
-
-    }
-}
-
 void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
 {
-    std::string itemStr = item->text().toStdString();
-
-    int id = std::stoi(itemStr.substr(0,itemStr.find(" ")));
-    std::string name = itemStr.substr(itemStr.find(" ")+1);
+    /*
+     auto widget =  (CustomListItem*)ui->listWidget->itemWidget(item);
 
     //remove item from db
-    dbHandler->deleteTvShow(id,name);
+    dbHandler->deleteTvShow(widget->getTvSeries().id,widget->getTvSeries().name);
 
     //remove item from list of TvSeries
 
     std::list<TvSeries>::iterator end = listOfTvShows.end();
     for(std::list<TvSeries>::iterator it = listOfTvShows.begin();it!=end;)
     {
-        if(it->id == id && it->name == name)
+        if(it->id == widget->getTvSeries().id && it->name == widget->getTvSeries().name)
             it = listOfTvShows.erase(it);
         else ++it;
     }
 
+
     //remove item from list widget
     ui->listWidget->removeItemWidget(item);
+    */
 }
 
 
@@ -102,7 +58,66 @@ void MainWindow::on_searchButton_clicked()
         std::vector<TvSeries> list = manager.searchSeries(ui->queryLine->text().toStdString());
         for(TvSeries ts : list)
         {
-            ui->searchResultsList->addItem(new QListWidgetItem(QString::fromStdString(ts.name)));
+            QListWidgetItem* item = new QListWidgetItem();
+            ui->searchResultsList->addItem(item);
+            ts.image = ":/images/got.jpg";
+            auto wid = new CustomListItem(this,ts,0);
+            item->setSizeHint(QSize(wid->width(),44));
+            ui->searchResultsList->setItemWidget(item,wid);
         }
     }
+}
+
+void MainWindow::on_searchResultsList_itemDoubleClicked(QListWidgetItem *item)
+{
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "are you sure", "Do you want to add this to the list?",QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+    {
+        auto widget = (CustomListItem*)ui->searchResultsList->itemWidget(item);
+        bool exist = false;
+
+        for(int i = 0; i < ui->listWidget->count(); ++i)
+        {
+            QListWidgetItem* item = ui->listWidget->item(i);
+            auto tvitem = (CustomListItem*)ui->listWidget->itemWidget(item);
+            if(tvitem->getTvSeries().name == widget->getTvSeries().name)
+            {
+              QMessageBox::warning(this,"Error","Item is already exist!");
+              exist=true;
+              break;
+            }
+        }
+
+        // add TvSeries
+        if(!exist)
+        {
+         //add TvSeries to Db
+
+          if(dbHandler->addTvShow(widget->getTvSeries().name,widget->getTvSeries().image,widget->getTvSeries().link))
+               qDebug() << "added new tv show!";
+
+
+           TvSeries end;
+
+           int new_id=1;
+
+           if(listOfTvShows.size()>0)
+           {
+                end = listOfTvShows.back();
+                new_id = end.id+1;
+           }
+
+           //add TvSeris to list widget
+
+           QListWidgetItem *item = new QListWidgetItem();
+           ui->listWidget->addItem(item);
+           item->setSizeHint(QSize(widget->width(),44));
+           ui->listWidget->setItemWidget(item,widget);
+
+           // add TvSeries to list of tv series
+
+           listOfTvShows.push_back(TvSeries{new_id,widget->getTvSeries().name,widget->getTvSeries().image,widget->getTvSeries().link});
+        }
+   }
 }

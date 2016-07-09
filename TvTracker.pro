@@ -14,17 +14,21 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         core/mainwindow.cpp \
-        core/dbhandler.cpp \
-    core/sourcegrabber.cpp \
-    core/tvtrackermanager.cpp
+        core/tvtrackermanager.cpp \
+        db/dbhandler.cpp \
+        http/sourcegrabber.cpp \
+        http/filedownloader.cpp \
+        core/customlistitem.cpp
 
-HEADERS  += core/mainwindow.h \
-            core/dbhandler.h \
-    core/sourcegrabber.h \
-    core/tvtrackermanager.h
+HEADERS += core/mainwindow.h \
+           db/dbhandler.h \
+           core/tvtrackermanager.h \
+           http/sourcegrabber.h \
+           http/filedownloader.h \
+           core/customlistitem.h
 
 FORMS    += core/mainwindow.ui
 
 RESOURCES += \
-    images.qrc
+    Resources/images.qrc
 

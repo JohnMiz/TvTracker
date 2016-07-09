@@ -1,4 +1,4 @@
 # TvTracker
 
 
-Tv Tracker is a software to track your favorite tv shows.
+Tv Tracker is a software to follow your favorite tv shows.
