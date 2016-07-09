@@ -16,6 +16,7 @@
 #include "db/dbhandler.h"
 #include "tvtrackermanager.h"
 #include "http/filedownloader.h"
+#include "customlistitem.h"
 
 namespace Ui {
 class MainWindow;
@@ -30,14 +31,14 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_clicked();
     void on_listWidget_itemClicked(QListWidgetItem *item);
     void on_searchButton_clicked();
-
     void on_searchResultsList_itemDoubleClicked(QListWidgetItem *item);
 
-private:
+protected:
     Ui::MainWindow *ui;
+private:
+
     DbHandler* dbHandler;
     std::list<TvSeries> listOfTvShows;
     TvTrackerManager manager;

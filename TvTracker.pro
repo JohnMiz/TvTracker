@@ -17,16 +17,18 @@ SOURCES += main.cpp\
         core/tvtrackermanager.cpp \
         db/dbhandler.cpp \
         http/sourcegrabber.cpp \
-        http/filedownloader.cpp
+        http/filedownloader.cpp \
+        core/customlistitem.cpp
 
-HEADERS  += core/mainwindow.h \
-            db/dbhandler.h \
-            core/tvtrackermanager.h \
-            http/sourcegrabber.h \
-            http/filedownloader.h
+HEADERS += core/mainwindow.h \
+           db/dbhandler.h \
+           core/tvtrackermanager.h \
+           http/sourcegrabber.h \
+           http/filedownloader.h \
+           core/customlistitem.h
 
 FORMS    += core/mainwindow.ui
 
 RESOURCES += \
-    images.qrc
+    Resources/images.qrc
 
