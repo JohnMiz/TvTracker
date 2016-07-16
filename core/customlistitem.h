@@ -27,6 +27,9 @@ public:
      TvSeries& getTvSeries();
      QPushButton*& getButton();
 
+     int getType() const;
+     void setType(int value);
+
 public slots:
      void handleClick(bool);
 

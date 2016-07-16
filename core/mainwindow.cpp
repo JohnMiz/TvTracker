@@ -83,7 +83,7 @@ void MainWindow::on_searchResultsList_itemDoubleClicked(QListWidgetItem *item)
             auto tvitem = (CustomListItem*)ui->listWidget->itemWidget(item);
             if(tvitem->getTvSeries().name == widget->getTvSeries().name)
             {
-              QMessageBox::warning(this,"Error","Item is already exist!");
+              QMessageBox::critical(this,"Error","Item is already exist!");
               exist=true;
               break;
             }
@@ -111,8 +111,10 @@ void MainWindow::on_searchResultsList_itemDoubleClicked(QListWidgetItem *item)
            //add TvSeris to list widget
 
            QListWidgetItem *item = new QListWidgetItem();
+           ui->searchResultsList->removeItemWidget(item);
            ui->listWidget->addItem(item);
            item->setSizeHint(QSize(widget->width(),44));
+           widget->setType(1);
            ui->listWidget->setItemWidget(item,widget);
 
            // add TvSeries to list of tv series
@@ -120,4 +122,21 @@ void MainWindow::on_searchResultsList_itemDoubleClicked(QListWidgetItem *item)
            listOfTvShows.push_back(TvSeries{new_id,widget->getTvSeries().name,widget->getTvSeries().image,widget->getTvSeries().link});
         }
    }
+}
+
+void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
+{
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "are you sure", "Do you want to get information about this series?",QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+    {
+        auto tvitem = (CustomListItem*)ui->listWidget->itemWidget(item);
+        int numberOfSeasons = manager.getNumberOfSeasons(tvitem->getTvSeries().link);
+
+        Season lastSeason = manager.getSeasonEpisodes(tvitem->getTvSeries().link,numberOfSeasons);
+        for(Episode ep : lastSeason.episodes)
+        {
+            qDebug() << "Number: " << ep.number << " AirDate: " << QString::fromStdString(ep.date);
+        }
+    }
 }

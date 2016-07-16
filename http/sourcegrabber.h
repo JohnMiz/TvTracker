@@ -10,6 +10,7 @@
 #include <QString>
 #include <QDebug>
 #include <fstream>
+#include <vector>
 
 struct TvSeries {
     int id;
@@ -18,18 +19,27 @@ struct TvSeries {
     std::string link;
 };
 
+struct Episode
+{
+    int number;
+    std::string date;
+};
+
+struct Season
+{
+    int number;
+    std::vector<Episode> episodes;
+};
+
 class SourceGrabber {
 public:
-     SourceGrabber(const std::string& title) : _title(title){}
+     SourceGrabber();
+     SourceGrabber(const std::string& title);
 
-public:
-     inline std::string grabSearchIMDB() { return grabSearchIMDB(_title); }
      std::string grabSearchIMDB(const std::string& title);
      std::string grabURL(const std::string& url);
-
      std::string getSourceCode(const std::string &url);
-private:
-     std::string _title;
+
 };
 
 #endif // SOURCEGRABBER_H

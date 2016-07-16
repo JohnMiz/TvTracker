@@ -1,5 +1,9 @@
 #include "sourcegrabber.h"
 
+SourceGrabber::SourceGrabber()
+{
+}
+
 std::string SourceGrabber::grabSearchIMDB(const std::string&  title)
 {
     std::string url = std::string("http://www.imdb.com/find?q=" + title + "&s=tt&ttype=tv&ref_=fn_tv");

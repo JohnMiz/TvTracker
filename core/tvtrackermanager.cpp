@@ -1,13 +1,71 @@
 #include "tvtrackermanager.h"
 
-TvTrackerManager::TvTrackerManager(){
+TvTrackerManager::TvTrackerManager()
+{
 
 }
 
 std::vector<TvSeries> TvTrackerManager::searchSeries(const std::string& title){
-    SourceGrabber grabber(title);
-    std::string source = grabber.grabSearchIMDB();
+    SourceGrabber grabber;
+    std::string source = grabber.grabSearchIMDB(title);
     return searchResults(source);
+}
+
+int TvTrackerManager::getNumberOfSeasons(const std::string &linkId)
+{
+    std::string url = "http://www.imdb.com/title/"+ linkId + "/episodes?season=999";
+
+    SourceGrabber grabber;
+    std::string source = grabber.grabURL(url);
+
+    if(source != "")
+    {
+
+        std::string start = "itemprop=\"name\">Season&nbsp;";
+        std::string end = "</h3>\n  <div class=\"list detail eplist\">";
+
+        return std::stoi(source.substr(source.find(start)+start.length(),source.find(end) - source.find(start)-start.length()));
+    }
+    return 0;
+}
+
+Season TvTrackerManager::getSeasonEpisodes(const std::string& linkId, const int& seasonNumber)
+{
+    Season s;
+    s.number = seasonNumber;
+    SourceGrabber grabber;
+    std::string source = grabber.grabURL("http://www.imdb.com/title/"+ linkId + "/episodes?season=" + std::to_string(seasonNumber));
+    qDebug() << seasonNumber;
+    std::smatch match;
+
+    std::regex episodeQuery("<div class=\"info\" itemprop=\"episodes\" itemscope itemtype=\"http://schema.org/TVEpisode\">\\s(.*)\\s.*\\s.*\\s.*");
+    std::sregex_iterator nextEpisode{ source.begin(), source.end(), episodeQuery };
+    std::sregex_iterator endEpisode;
+
+
+     while (nextEpisode != endEpisode)
+     {
+         match = *nextEpisode;
+
+        std::string searchResult = match.str(0);
+
+        std::string startQueryEpNum = "<meta itemprop=\"episodeNumber\" content=\"";
+        std::string endQueryEpNum = "\"/>";
+
+        std::string epNum = searchResult.substr(searchResult.find(startQueryEpNum) + startQueryEpNum.length(),searchResult.find(endQueryEpNum) -(searchResult.find(startQueryEpNum) + startQueryEpNum.length()));
+
+        std::string startQueryAirDate = "<div class=\"airdate\">\n            ";
+        std::string endQueryAirDate = "\n    </div>";
+
+        std::string airDate = searchResult.substr(searchResult.find(startQueryAirDate) + startQueryAirDate.length(),searchResult.find(endQueryAirDate) -(searchResult.find(startQueryAirDate) + startQueryAirDate.length()));
+
+        s.episodes.push_back(Episode{std::stoi(epNum),airDate});
+
+        ++nextEpisode;
+
+    }
+
+    return s;
 }
 
 std::vector<TvSeries> TvTrackerManager::searchResults(const std::string &code){
