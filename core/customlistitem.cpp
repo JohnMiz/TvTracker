@@ -42,7 +42,7 @@ void CustomListItem::paintEvent(QPaintEvent *event)
     imageObject io{QImage(QString::fromStdString(ts.image)),QPoint(0,0)};
 
     p.drawImage(io.pos,io.img);
-    QString str = QString::fromStdString(ts.name+ " " + ts.link);
+    QString str = QString::fromStdString(ts.name);
     p.setFont(QFont("arial",10));
     p.drawText(io.pos.x() + 50,io.pos.y() + 25,str);
 }

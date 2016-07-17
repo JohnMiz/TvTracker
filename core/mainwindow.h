@@ -7,6 +7,7 @@
 #include <QWidgetList>
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <memory>
 #include <list>

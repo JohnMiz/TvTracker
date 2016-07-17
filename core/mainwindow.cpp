@@ -56,14 +56,23 @@ void MainWindow::on_searchButton_clicked()
     {
         ui->searchResultsList->clear();
         std::vector<TvSeries> list = manager.searchSeries(ui->queryLine->text().toStdString());
+
         for(TvSeries ts : list)
         {
             QListWidgetItem* item = new QListWidgetItem();
             ui->searchResultsList->addItem(item);
-            ts.image = ":/images/got.jpg";
+            FileDownloader* f = new FileDownloader(QString::fromStdString(ts.image),this);
+            std::string path = "C:\\Users\\Sabri_000\\Documents\\TvTracker\\Resources\\images\\" + ts.name + ".jpg";
+
+            std::ofstream file(path);
+            file << f->getDownloadedData().toStdString();
+            file.close();
+
+            ts.image = path;
             auto wid = new CustomListItem(this,ts,0);
             item->setSizeHint(QSize(wid->width(),44));
             ui->searchResultsList->setItemWidget(item,wid);
+
         }
     }
 }
@@ -136,7 +145,8 @@ void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
         Season lastSeason = manager.getSeasonEpisodes(tvitem->getTvSeries().link,numberOfSeasons);
         for(Episode ep : lastSeason.episodes)
         {
-            qDebug() << "Number: " << ep.number << " AirDate: " << QString::fromStdString(ep.date);
+            std::string airdate = std::to_string(ep.airDate.day) + "." + std::to_string(ep.airDate.month) + "." + std::to_string(ep.airDate.year);
+            qDebug() << "Number: " << ep.number << " AirDate: " << QString::fromStdString(airdate);
         }
     }
 }

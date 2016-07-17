@@ -22,6 +22,7 @@ public:
 
 private:
     std::vector<TvSeries> searchResults(const std::string& code);
+    Date stringToDate(std::string strDate);
 };
 
 #endif // TVTRACKERMANAGER_H

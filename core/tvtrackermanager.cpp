@@ -35,17 +35,16 @@ Season TvTrackerManager::getSeasonEpisodes(const std::string& linkId, const int&
     s.number = seasonNumber;
     SourceGrabber grabber;
     std::string source = grabber.grabURL("http://www.imdb.com/title/"+ linkId + "/episodes?season=" + std::to_string(seasonNumber));
-    qDebug() << seasonNumber;
+
     std::smatch match;
 
     std::regex episodeQuery("<div class=\"info\" itemprop=\"episodes\" itemscope itemtype=\"http://schema.org/TVEpisode\">\\s(.*)\\s.*\\s.*\\s.*");
     std::sregex_iterator nextEpisode{ source.begin(), source.end(), episodeQuery };
     std::sregex_iterator endEpisode;
 
-
-     while (nextEpisode != endEpisode)
-     {
-         match = *nextEpisode;
+    while (nextEpisode != endEpisode)
+    {
+        match = *nextEpisode;
 
         std::string searchResult = match.str(0);
 
@@ -59,7 +58,7 @@ Season TvTrackerManager::getSeasonEpisodes(const std::string& linkId, const int&
 
         std::string airDate = searchResult.substr(searchResult.find(startQueryAirDate) + startQueryAirDate.length(),searchResult.find(endQueryAirDate) -(searchResult.find(startQueryAirDate) + startQueryAirDate.length()));
 
-        s.episodes.push_back(Episode{std::stoi(epNum),airDate});
+        s.episodes.push_back(Episode{std::stoi(epNum),stringToDate(airDate)});
 
         ++nextEpisode;
 
@@ -104,7 +103,6 @@ std::vector<TvSeries> TvTrackerManager::searchResults(const std::string &code){
               ++nextLink;
          }
 
-
     }
     else
     {
@@ -112,6 +110,68 @@ std::vector<TvSeries> TvTrackerManager::searchResults(const std::string &code){
          qDebug() << "Didnt find anything\n";
     }
 
-
     return tvList;
 }
+
+Date TvTrackerManager::stringToDate(std::string strDate)
+{
+    std::string months[] = {"Jan.", "Feb.", "Mar.", "Apr.", "May.", "Jun.", "Jul.", "Aug.", "Sep.", "Oct.","Nov.","Dec."};
+    Date d;
+
+    std::vector<std::string> words;
+
+    int spaceLoc=0;
+    int temp=0;
+    while((spaceLoc = strDate.find(" ",temp)) != -1)
+    {
+        qDebug() << QString::fromStdString(strDate.substr(temp,spaceLoc-temp));
+        words.push_back(strDate.substr(temp,spaceLoc-temp));
+        temp = spaceLoc + 1;
+    }
+    words.push_back(strDate.substr(temp));
+
+    if(words.size() == 1)
+    {
+        d.day = 0;
+        d.month = 0;
+        d.year = std::stoi(words[0]);
+    }
+    else
+    {
+        if(words[words.size() - 2] == months[0])
+            d.month = 1;
+        else if(words[words.size() - 2] == months[1])
+            d.month = 2;
+        else if(words[words.size()-2] == months[2])
+            d.month = 3;
+        else if(words[words.size()-2] == months[3])
+            d.month = 4;
+        else if(words[words.size()-2] == months[4])
+            d.month = 5;
+        else if(words[words.size()-2] == months[5])
+            d.month = 6;
+        else if(words[words.size()-2] == months[6])
+            d.month = 7;
+        else if(words[words.size()-2] == months[7])
+            d.month = 8;
+        else if(words[words.size()-2] == months[8])
+            d.month = 9;
+        else if(words[words.size()-2] == months[9])
+            d.month = 10;
+        else if(words[words.size()-2] == months[10])
+            d.month = 11;
+        else if(words[words.size()-2] == months[11])
+            d.month = 12;
+
+        if(words.size()==2)
+        {
+            d.year = std::stoi(words[1]);
+        }
+        else{
+            d.day = std::stoi(words[0]);
+            d.year = std::stoi(words[2]);
+        }
+    }
+    return d;
+}
+

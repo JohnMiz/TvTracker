@@ -12,6 +12,13 @@
 #include <fstream>
 #include <vector>
 
+struct Date
+{
+    int day;
+    int month;
+    int year;
+};
+
 struct TvSeries {
     int id;
     std::string name;
@@ -22,7 +29,7 @@ struct TvSeries {
 struct Episode
 {
     int number;
-    std::string date;
+    Date airDate;
 };
 
 struct Season
