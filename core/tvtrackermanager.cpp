@@ -124,7 +124,6 @@ Date TvTrackerManager::stringToDate(std::string strDate)
     int temp=0;
     while((spaceLoc = strDate.find(" ",temp)) != -1)
     {
-        qDebug() << QString::fromStdString(strDate.substr(temp,spaceLoc-temp));
         words.push_back(strDate.substr(temp,spaceLoc-temp));
         temp = spaceLoc + 1;
     }
@@ -166,6 +165,7 @@ Date TvTrackerManager::stringToDate(std::string strDate)
         if(words.size()==2)
         {
             d.year = std::stoi(words[1]);
+            d.day = 0;
         }
         else{
             d.day = std::stoi(words[0]);
@@ -174,4 +174,3 @@ Date TvTrackerManager::stringToDate(std::string strDate)
     }
     return d;
 }
-

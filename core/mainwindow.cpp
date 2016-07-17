@@ -25,6 +25,29 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+int MainWindow::calculateTimeLeftToDate(const Date &date)
+{
+    time_t t = time(0);
+
+    struct std::tm currentTime = *localtime(&t);
+    currentTime.tm_hour = 0;
+    currentTime.tm_min = 0;
+    currentTime.tm_sec = 0;
+
+    struct std::tm airDate;
+    airDate.tm_hour = 0;
+    airDate.tm_min = 0;
+    airDate.tm_sec = 0;
+    airDate.tm_mday = date.day;
+    airDate.tm_mon = date.month == 0 ? 0 : date.month - 1 ;
+    airDate.tm_year = date.year - 1900;
+
+    std::time_t currentTime_time = std::mktime(&currentTime);
+    std::time_t airDate_time = std::mktime(&airDate);
+
+    return std::difftime(airDate_time, currentTime_time) / (60 * 60 * 24);
+}
+
 void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
 {
     /*
@@ -145,8 +168,8 @@ void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
         Season lastSeason = manager.getSeasonEpisodes(tvitem->getTvSeries().link,numberOfSeasons);
         for(Episode ep : lastSeason.episodes)
         {
-            std::string airdate = std::to_string(ep.airDate.day) + "." + std::to_string(ep.airDate.month) + "." + std::to_string(ep.airDate.year);
-            qDebug() << "Number: " << ep.number << " AirDate: " << QString::fromStdString(airdate);
+            qDebug() << calculateTimeLeftToDate(ep.airDate);
         }
+
     }
 }
