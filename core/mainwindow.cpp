@@ -163,13 +163,38 @@ void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
     if (reply == QMessageBox::Yes)
     {
         auto tvitem = (CustomListItem*)ui->listWidget->itemWidget(item);
-        int numberOfSeasons = manager.getNumberOfSeasons(tvitem->getTvSeries().link);
 
-        Season lastSeason = manager.getSeasonEpisodes(tvitem->getTvSeries().link,numberOfSeasons);
-        for(Episode ep : lastSeason.episodes)
+        int numberOfSeasons = manager.getNumberOfSeasons(tvitem->getTvSeries().link);
+        bool found = false;
+
+        Episode currentEp{0,0};
+        int season=0;
+
+        //Finding the current episode
+
+        for(int i = 1; i <= numberOfSeasons && !found; ++i)
         {
-            qDebug() << calculateTimeLeftToDate(ep.airDate);
+            Season s = manager.getSeasonEpisodes(tvitem->getTvSeries().link,i);
+            for(Episode ep : s.episodes)
+            {
+                if(calculateTimeLeftToDate(ep.airDate) > 0)
+                {
+                    currentEp = ep;
+                    season = s.number;
+                    found = true;
+                    break;
+                }
+            }
         }
 
+        if(currentEp.number == 0 && currentEp.airDate.day==0 && currentEp.airDate.month==0 && currentEp.airDate.year==0)
+        {
+            QMessageBox::critical(this,"Error","Did not get current episode!");
+        }
+        else
+        {
+            qDebug() << "Season:" << season << "Episode:" << currentEp.number;
+            qDebug() << "AirDate:" << currentEp.airDate.day << "." << currentEp.airDate.month << "." << currentEp.airDate.year;
+        }
     }
 }

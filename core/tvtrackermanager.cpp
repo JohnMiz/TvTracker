@@ -120,8 +120,7 @@ Date TvTrackerManager::stringToDate(std::string strDate)
 
     std::vector<std::string> words;
 
-    int spaceLoc=0;
-    int temp=0;
+    size_t spaceLoc = 0,temp = 0;
     while((spaceLoc = strDate.find(" ",temp)) != -1)
     {
         words.push_back(strDate.substr(temp,spaceLoc-temp));
