@@ -25,7 +25,8 @@ HEADERS += core/mainwindow.h \
            core/tvtrackermanager.h \
            http/sourcegrabber.h \
            http/filedownloader.h \
-           core/customlistitem.h
+           core/customlistitem.h \
+    core/tvtrackertypes.h
 
 FORMS    += core/mainwindow.ui
 

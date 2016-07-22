@@ -33,6 +33,7 @@ public:
     QPushButton *searchButton;
     QLineEdit *queryLine;
     QListWidget *searchResultsList;
+    QGroupBox *groupBox_2;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -72,6 +73,9 @@ public:
         searchResultsList->setGeometry(QRect(20, 50, 351, 341));
         searchResultsList->setFont(font);
         searchResultsList->setIconSize(QSize(32, 44));
+        groupBox_2 = new QGroupBox(centralWidget);
+        groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
+        groupBox_2->setGeometry(QRect(10, 420, 851, 181));
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
@@ -85,6 +89,7 @@ public:
         itemsGroup->setTitle(QApplication::translate("MainWindow", "Items list", 0));
         groupBox->setTitle(QApplication::translate("MainWindow", "Search", 0));
         searchButton->setText(QApplication::translate("MainWindow", "Search", 0));
+        groupBox_2->setTitle(QApplication::translate("MainWindow", "GroupBox", 0));
     } // retranslateUi
 
 };

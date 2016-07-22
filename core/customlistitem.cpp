@@ -42,7 +42,33 @@ void CustomListItem::paintEvent(QPaintEvent *event)
     imageObject io{QImage(QString::fromStdString(ts.image)),QPoint(0,0)};
 
     p.drawImage(io.pos,io.img);
-    QString str = QString::fromStdString(ts.name+ " " + ts.link);
+    QString str = QString::fromStdString(ts.name);
     p.setFont(QFont("arial",10));
     p.drawText(io.pos.x() + 50,io.pos.y() + 25,str);
+}
+
+int CustomListItem::getType() const
+{
+    return type;
+}
+
+void CustomListItem::setType(int value)
+{
+    type = value;
+    if(type == 1)
+    {
+        QPushButton * button = new QPushButton("",this);
+
+        button->setMaximumWidth(20);
+        button->setMaximumHeight(20);
+        button->setIcon(QIcon(":/images/Black_Remove.png"));
+
+        QObject::connect(button,SIGNAL(clicked(bool)),this,SLOT(handleClick(bool)));
+
+        QVBoxLayout* layout = new QVBoxLayout();
+        layout->addWidget(button);
+
+        button->move(385, 0);
+        button->show();
+    }
 }

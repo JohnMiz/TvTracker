@@ -6,6 +6,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QImage>
 
 class FileDownloader : public QObject
 {
@@ -13,17 +14,16 @@ class FileDownloader : public QObject
  public:
   explicit FileDownloader(QUrl imageUrl, QObject *parent = 0);
   virtual ~FileDownloader();
-  QByteArray downloadedData() const;
 
- signals:
-  void downloaded();
 
- private slots:
-  void fileDownloaded(QNetworkReply* pReply);
+  QByteArray getDownloadedData() const;
 
- private:
-  QNetworkAccessManager m_WebCtrl;
-  QByteArray m_DownloadedData;
+private slots:
+    void replyFinished(QNetworkReply *reply);
+private:
+
+  QNetworkAccessManager* netManager;
+  QByteArray downloadedData;
 };
 
 #endif // FILEDOWNLOADER_H
